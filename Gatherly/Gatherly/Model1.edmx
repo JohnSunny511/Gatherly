@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GatherlyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="login_id" />
+          </Key>
+          <Property Name="login_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reg_id" Type="int" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="user_type" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="owner">
+          <Key>
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="owner_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="owner_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="owner_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="owner_phone" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="owner_address" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="owner_photo" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="owner_status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_age" Type="int" Nullable="false" />
+          <Property Name="user_phone" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="user_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_addr" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="user_photo" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="user_status" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="venue">
+          <Key>
+            <PropertyRef Name="venue_id" />
+          </Key>
+          <Property Name="venue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="venue_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="location" Type="nvarchar" MaxLength="255" />
+          <Property Name="capacity" Type="int" />
+          <Property Name="price" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="venue_type" Type="nvarchar" MaxLength="50" />
+          <Property Name="catering" Type="bit" />
+          <Property Name="parking" Type="bit" />
+          <Property Name="ac" Type="bit" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="available_from" Type="datetime" />
+          <Property Name="available_to" Type="datetime" />
+          <Property Name="venue_status" Type="nvarchar" MaxLength="20" />
+          <Property Name="venue_image" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <Function Name="sp_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="una" Type="varchar" Mode="In" />
+          <Parameter Name="pwd" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_LoginInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rid" Type="int" Mode="In" />
+          <Parameter Name="una" Type="varchar" Mode="In" />
+          <Parameter Name="pw" Type="varchar" Mode="In" />
+          <Parameter Name="utype" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_maxLogId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ownerreg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oid" Type="int" Mode="In" />
+          <Parameter Name="ona" Type="varchar" Mode="In" />
+          <Parameter Name="oemail" Type="varchar" Mode="In" />
+          <Parameter Name="ophone" Type="varchar" Mode="In" />
+          <Parameter Name="oaddr" Type="varchar" Mode="In" />
+          <Parameter Name="ophoto" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_userreg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="int" Mode="In" />
+          <Parameter Name="unam" Type="varchar" Mode="In" />
+          <Parameter Name="uage" Type="int" Mode="In" />
+          <Parameter Name="uphone" Type="varchar" Mode="In" />
+          <Parameter Name="uemail" Type="varchar" Mode="In" />
+          <Parameter Name="uaddr" Type="varchar" Mode="In" />
+          <Parameter Name="uphoto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_venueinsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ownerid" Type="int" Mode="In" />
+          <Parameter Name="vname" Type="nvarchar" Mode="In" />
+          <Parameter Name="location" Type="nvarchar" Mode="In" />
+          <Parameter Name="capacity" Type="int" Mode="In" />
+          <Parameter Name="price" Type="decimal" Mode="In" />
+          <Parameter Name="venuetype" Type="nvarchar" Mode="In" />
+          <Parameter Name="description" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="availablefrom" Type="datetime" Mode="In" />
+          <Parameter Name="availableto" Type="datetime" Mode="In" />
+          <Parameter Name="venueimage" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="GatherlyModelStoreContainer">
+          <EntitySet Name="login" EntityType="Self.login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="owner" EntityType="Self.owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="venue" EntityType="Self.venue" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GatherlyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="login">
+          <Key>
+            <PropertyRef Name="login_id" />
+          </Key>
+          <Property Name="login_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="reg_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_age" Type="Int32" Nullable="false" />
+          <Property Name="user_phone" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_addr" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_photo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="venue">
+          <Key>
+            <PropertyRef Name="venue_id" />
+          </Key>
+          <Property Name="venue_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="venue_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="capacity" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="venue_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="catering" Type="Boolean" />
+          <Property Name="parking" Type="Boolean" />
+          <Property Name="ac" Type="Boolean" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="available_from" Type="DateTime" Precision="3" />
+          <Property Name="available_to" Type="DateTime" Precision="3" />
+          <Property Name="venue_status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="venue_image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="GatherlyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="logins" EntityType="Self.login" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="venues" EntityType="Self.venue" />
+          <FunctionImport Name="adminreg">
+            <Parameter Name="oid" Mode="In" Type="Int32" />
+            <Parameter Name="ona" Mode="In" Type="String" />
+            <Parameter Name="oemail" Mode="In" Type="String" />
+            <Parameter Name="ophone" Mode="In" Type="String" />
+            <Parameter Name="oaddr" Mode="In" Type="String" />
+            <Parameter Name="ophoto" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="owners" EntityType="GatherlyModel.owner" />
+          <FunctionImport Name="sp_ownerreg">
+            <Parameter Name="oid" Mode="In" Type="Int32" />
+            <Parameter Name="ona" Mode="In" Type="String" />
+            <Parameter Name="oemail" Mode="In" Type="String" />
+            <Parameter Name="ophone" Mode="In" Type="String" />
+            <Parameter Name="oaddr" Mode="In" Type="String" />
+            <Parameter Name="ophoto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_maxLogId" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="sp_LoginInsert">
+            <Parameter Name="rid" Mode="In" Type="Int32" />
+            <Parameter Name="una" Mode="In" Type="String" />
+            <Parameter Name="pw" Mode="In" Type="String" />
+            <Parameter Name="utype" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_userreg">
+            <Parameter Name="uid" Mode="In" Type="Int32" />
+            <Parameter Name="unam" Mode="In" Type="String" />
+            <Parameter Name="uage" Mode="In" Type="Int32" />
+            <Parameter Name="uphone" Mode="In" Type="String" />
+            <Parameter Name="uemail" Mode="In" Type="String" />
+            <Parameter Name="uaddr" Mode="In" Type="String" />
+            <Parameter Name="uphoto" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_venueinsert">
+            <Parameter Name="ownerid" Mode="In" Type="Int32" />
+            <Parameter Name="vname" Mode="In" Type="String" />
+            <Parameter Name="location" Mode="In" Type="String" />
+            <Parameter Name="capacity" Mode="In" Type="Int32" />
+            <Parameter Name="price" Mode="In" Type="Decimal" />
+            <Parameter Name="venuetype" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="availablefrom" Mode="In" Type="DateTime" />
+            <Parameter Name="availableto" Mode="In" Type="DateTime" />
+            <Parameter Name="venueimage" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_login" ReturnType="Collection(Int32)">
+            <Parameter Name="una" Mode="In" Type="String" />
+            <Parameter Name="pwd" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="owner">
+          <Key>
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owner_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="owner_email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="owner_phone" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="owner_address" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="owner_photo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="owner_status" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GatherlyModelStoreContainer" CdmEntityContainer="GatherlyEntities">
+          <EntitySetMapping Name="logins">
+            <EntityTypeMapping TypeName="GatherlyModel.login">
+              <MappingFragment StoreEntitySet="login">
+                <ScalarProperty Name="login_id" ColumnName="login_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+                <ScalarProperty Name="reg_id" ColumnName="reg_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="GatherlyModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_age" ColumnName="user_age" />
+                <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_addr" ColumnName="user_addr" />
+                <ScalarProperty Name="user_photo" ColumnName="user_photo" />
+                <ScalarProperty Name="user_status" ColumnName="user_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="venues">
+            <EntityTypeMapping TypeName="GatherlyModel.venue">
+              <MappingFragment StoreEntitySet="venue">
+                <ScalarProperty Name="venue_id" ColumnName="venue_id" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="venue_name" ColumnName="venue_name" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="venue_type" ColumnName="venue_type" />
+                <ScalarProperty Name="catering" ColumnName="catering" />
+                <ScalarProperty Name="parking" ColumnName="parking" />
+                <ScalarProperty Name="ac" ColumnName="ac" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="available_from" ColumnName="available_from" />
+                <ScalarProperty Name="available_to" ColumnName="available_to" />
+                <ScalarProperty Name="venue_status" ColumnName="venue_status" />
+                <ScalarProperty Name="venue_image" ColumnName="venue_image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="owners">
+            <EntityTypeMapping TypeName="GatherlyModel.owner">
+              <MappingFragment StoreEntitySet="owner">
+                <ScalarProperty Name="owner_status" ColumnName="owner_status" />
+                <ScalarProperty Name="owner_photo" ColumnName="owner_photo" />
+                <ScalarProperty Name="owner_address" ColumnName="owner_address" />
+                <ScalarProperty Name="owner_phone" ColumnName="owner_phone" />
+                <ScalarProperty Name="owner_email" ColumnName="owner_email" />
+                <ScalarProperty Name="owner_name" ColumnName="owner_name" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ownerreg" FunctionName="GatherlyModel.Store.sp_ownerreg" />
+          <FunctionImportMapping FunctionImportName="sp_maxLogId" FunctionName="GatherlyModel.Store.sp_maxLogId" />
+          <FunctionImportMapping FunctionImportName="sp_LoginInsert" FunctionName="GatherlyModel.Store.sp_LoginInsert" />
+          <FunctionImportMapping FunctionImportName="sp_userreg" FunctionName="GatherlyModel.Store.sp_userreg" />
+          <FunctionImportMapping FunctionImportName="sp_venueinsert" FunctionName="GatherlyModel.Store.sp_venueinsert" />
+          <FunctionImportMapping FunctionImportName="sp_login" FunctionName="GatherlyModel.Store.sp_login" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GatherlyModelStoreContainer" CdmEntityContainer="GatherlyEntities">
+    <EntitySetMapping Name="logins">
+      <EntityTypeMapping TypeName="GatherlyModel.login">
+        <MappingFragment StoreEntitySet="login">
+          <ScalarProperty Name="login_id" ColumnName="login_id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="user_type" ColumnName="user_type" />
+          <ScalarProperty Name="reg_id" ColumnName="reg_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="GatherlyModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_age" ColumnName="user_age" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_addr" ColumnName="user_addr" />
+          <ScalarProperty Name="user_photo" ColumnName="user_photo" />
+          <ScalarProperty Name="user_status" ColumnName="user_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="venues">
+      <EntityTypeMapping TypeName="GatherlyModel.venue">
+        <MappingFragment StoreEntitySet="venue">
+          <ScalarProperty Name="venue_id" ColumnName="venue_id" />
+          <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+          <ScalarProperty Name="venue_name" ColumnName="venue_name" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="capacity" ColumnName="capacity" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="venue_type" ColumnName="venue_type" />
+          <ScalarProperty Name="catering" ColumnName="catering" />
+          <ScalarProperty Name="parking" ColumnName="parking" />
+          <ScalarProperty Name="ac" ColumnName="ac" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="available_from" ColumnName="available_from" />
+          <ScalarProperty Name="available_to" ColumnName="available_to" />
+          <ScalarProperty Name="venue_status" ColumnName="venue_status" />
+          <ScalarProperty Name="venue_image" ColumnName="venue_image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="owners">
+      <EntityTypeMapping TypeName="GatherlyModel.owner">
+        <MappingFragment StoreEntitySet="owner">
+          <ScalarProperty Name="owner_status" ColumnName="owner_status" />
+          <ScalarProperty Name="owner_photo" ColumnName="owner_photo" />
+          <ScalarProperty Name="owner_address" ColumnName="owner_address" />
+          <ScalarProperty Name="owner_phone" ColumnName="owner_phone" />
+          <ScalarProperty Name="owner_email" ColumnName="owner_email" />
+          <ScalarProperty Name="owner_name" ColumnName="owner_name" />
+          <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_ownerreg" FunctionName="GatherlyModel.Store.sp_ownerreg" />
+    <FunctionImportMapping FunctionImportName="sp_maxLogId" FunctionName="GatherlyModel.Store.sp_maxLogId" />
+    <FunctionImportMapping FunctionImportName="sp_LoginInsert" FunctionName="GatherlyModel.Store.sp_LoginInsert" />
+    <FunctionImportMapping FunctionImportName="sp_userreg" FunctionName="GatherlyModel.Store.sp_userreg" />
+    <FunctionImportMapping FunctionImportName="sp_venueinsert" FunctionName="GatherlyModel.Store.sp_venueinsert" />
+    <FunctionImportMapping FunctionImportName="sp_login" FunctionName="GatherlyModel.Store.sp_login" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.37507.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gatherly", "Gatherly\Gatherly.csproj", "{9F16B27A-1ADE-4D83-9E24-73D101C070A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F16B27A-1ADE-4D83-9E24-73D101C070A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F16B27A-1ADE-4D83-9E24-73D101C070A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F16B27A-1ADE-4D83-9E24-73D101C070A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F16B27A-1ADE-4D83-9E24-73D101C070A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1DD985E-29FE-4F3A-BE03-54E75009EA39}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,142 @@
+﻿@model Gatherly.Models.VenueInsertclss
+@{
+    ViewBag.Title = "InsertVenuePageLoad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Venue</h2>
+
+<div>
+
+    @using (Html.BeginForm(
+        "AddVenue_Click",
+        "VenueInsert",
+        FormMethod.Post,
+        new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            <label>Venue Name:</label>
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m => m.venue_name)
+            @Html.ValidationMessageFor(m => m.venue_name)
+        </div>
+
+
+        <div>
+            <label>Location:</label>
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m => m.location)
+            @Html.ValidationMessageFor(m => m.location)
+        </div>
+
+
+        <div>
+            <label>Capacity:</label>
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m => m.capacity)
+            @Html.ValidationMessageFor(m => m.capacity)
+        </div>
+
+
+        <div>
+            <label>Price:</label>
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m => m.price)
+            @Html.ValidationMessageFor(m => m.price)
+        </div>
+
+
+        <div>
+            <label>Venue Type:</label>
+        </div>
+
+        <div>
+            @Html.DropDownListFor(
+                m => m.venue_type,
+                new SelectList(new[]
+                {
+                    "Marriage Hall",
+                    "Convention Center",
+                    "Auditorium",
+                    "Resort",
+                    "Outdoor"
+                }),
+                "--- Select Venue Type ---"
+            )
+
+            @Html.ValidationMessageFor(m => m.venue_type)
+        </div>
+
+
+        <div>
+            <label>Description:</label>
+        </div>
+
+        <div>
+            @Html.TextAreaFor(m => m.description)
+            @Html.ValidationMessageFor(m => m.description)
+        </div>
+
+
+        <div>
+            <label>Available From:</label>
+        </div>
+
+        <div>
+            @Html.TextBoxFor(
+                m => m.available_from,
+                "{0:yyyy-MM-dd}",
+                new { type = "date" }
+            )
+
+            @Html.ValidationMessageFor(m => m.available_from)
+        </div>
+
+
+        <div>
+            <label>Available To:</label>
+        </div>
+
+        <div>
+            @Html.TextBoxFor(
+                m => m.available_to,
+                "{0:yyyy-MM-dd}",
+                new { type = "date" }
+            )
+
+            @Html.ValidationMessageFor(m => m.available_to)
+        </div>
+
+
+        <div>
+            <label>Venue Image:</label>
+        </div>
+
+        <div>
+            @Html.TextBox(
+                "file",
+                "",
+                new { Type = "file" }
+            )
+        </div>
+
+
+        <div>
+            <input type="submit" value="Add Venue" />
+        </div>
+
+
+        <div>
+            @Html.DisplayFor(m => m.venuemsg)
+        </div>}
+
+</div>
+
