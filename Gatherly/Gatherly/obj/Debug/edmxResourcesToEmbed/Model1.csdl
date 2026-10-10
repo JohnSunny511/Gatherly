@@ -30,18 +30,18 @@
     <Property Name="venue_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="owner_id" Type="Int32" Nullable="false" />
     <Property Name="venue_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="capacity" Type="Int32" />
-    <Property Name="price" Type="Decimal" Precision="12" Scale="2" />
-    <Property Name="venue_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="catering" Type="Boolean" />
-    <Property Name="parking" Type="Boolean" />
-    <Property Name="ac" Type="Boolean" />
-    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="available_from" Type="DateTime" Precision="3" />
-    <Property Name="available_to" Type="DateTime" Precision="3" />
-    <Property Name="venue_status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="venue_image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="capacity" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="venue_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="catering" Type="Boolean" Nullable="false" />
+    <Property Name="parking" Type="Boolean" Nullable="false" />
+    <Property Name="ac" Type="Boolean" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="available_from" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="available_to" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="venue_status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="venue_image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <EntityContainer Name="GatherlyEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="logins" EntityType="Self.login" />
@@ -92,7 +92,8 @@
       <Parameter Name="availableto" Mode="In" Type="DateTime" />
       <Parameter Name="venueimage" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="sp_login" ReturnType="Collection(Int32)">
+    <FunctionImport Name="sp_UserViewVenue" ReturnType="Collection(GatherlyModel.sp_UserViewVenue_Result)" />
+    <FunctionImport Name="sp_login" ReturnType="Collection(GatherlyModel.sp_login_Result)">
       <Parameter Name="una" Mode="In" Type="String" />
       <Parameter Name="pwd" Mode="In" Type="String" />
     </FunctionImport>
@@ -109,4 +110,17 @@
     <Property Name="owner_photo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="owner_status" Type="Int32" Nullable="false" />
   </EntityType>
+  <ComplexType Name="sp_UserViewVenue_Result">
+    <Property Type="Int32" Name="venue_id" Nullable="false" />
+    <Property Type="String" Name="venue_image" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="venue_name" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="location" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="capacity" Nullable="true" />
+    <Property Type="Decimal" Name="price" Nullable="true" Precision="12" Scale="2" />
+    <Property Type="String" Name="venue_type" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_login_Result">
+    <Property Type="Int32" Name="reg_id" Nullable="false" />
+    <Property Type="String" Name="user_type" Nullable="false" MaxLength="20" />
+  </ComplexType>
 </Schema>

@@ -1,0 +1,107 @@
+﻿@model Gatherly.Models.VenueSearchclss
+
+@{
+    ViewBag.Title = "UserViewVenue_PageLoad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Explore Venues</h2>
+
+<br />
+
+@using (Html.BeginForm("SearchVenue_Click", "UserViewVenue", FormMethod.Post))
+{
+    <table style="width:100%; border:1px solid lightgray; background-color:LightGray;">
+        <tr>
+            <td style="width:25%; padding:10px;">
+                @Html.TextBoxFor(m => m.insertse.location,
+                    new { @style = "width:100%;", placeholder = "Location" })
+            </td>
+
+            <td style="width:25%; padding:10px;">
+                @Html.TextBoxFor(m => m.insertse.capacity,
+                    new { @style = "width:100%;", type = "number", min = "1", placeholder = "Minimum Capacity" })
+            </td>
+
+            <td style="width:25%; padding:10px;">
+                @Html.TextBoxFor(m => m.insertse.price,
+                    new { @style = "width:100%;", type = "number", min = "0", step = "0.01", placeholder = "Maximum Price" })
+            </td>
+
+            <td style="width:25%; padding:10px;">
+                @Html.DropDownListFor(m => m.insertse.venue_type,
+                    new SelectList(new[]
+                    {
+                        "Indoor",
+                        "Outdoor",
+                        "Marriage Hall",
+                        "Convention Center",
+                        "Auditorium",
+                        "Resort"
+                    }),
+                    "All Types",
+                    new { @style = "width:100%; padding:5px;" })
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4" style="padding:10px;">
+                <input type="submit" value="Search Venues" class="btn btn-primary" />
+                <a href="@Url.Action("UserViewVenue_PageLoad", "UserViewVenue")"
+                   class="btn btn-default">Clear Filters</a>
+            </td>
+        </tr>
+    </table>
+}
+
+<br />
+
+<h3>Available Venues</h3>
+
+@if (Model.selectvenue != null && Model.selectvenue.Count > 0)
+{
+    <div style="overflow-x:auto;">
+        <table class="table table-bordered table-striped">
+
+            <thead>
+                <tr>
+                    <th>Venue Image</th>
+                    <th>Venue Name</th>
+                    <th>Location</th>
+                    <th>Capacity</th>
+                    <th>Price</th>
+                    <th>Venue Type</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.selectvenue)
+                {
+                <tr>
+                    <td>
+                        <img src="@Url.Content(item.venue_image)"
+                             alt="@item.venue_name"
+                             width="150"
+                             height="100"
+                             style="object-fit:cover;" />
+                    </td>
+
+                    <td>@item.venue_name</td>
+
+                    <td>@item.location</td>
+
+                    <td>@item.capacity Guests</td>
+                    <td>₹@item.price.ToString("N2")</td>
+
+                    <td>@item.venue_type</td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+}
+else
+{
+    <p>No venues found matching your search.</p>
+}

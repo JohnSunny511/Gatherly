@@ -42,18 +42,18 @@
     <Property Name="venue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="owner_id" Type="int" Nullable="false" />
     <Property Name="venue_name" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="location" Type="nvarchar" MaxLength="255" />
-    <Property Name="capacity" Type="int" />
-    <Property Name="price" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="venue_type" Type="nvarchar" MaxLength="50" />
-    <Property Name="catering" Type="bit" />
-    <Property Name="parking" Type="bit" />
-    <Property Name="ac" Type="bit" />
-    <Property Name="description" Type="nvarchar(max)" />
-    <Property Name="available_from" Type="datetime" />
-    <Property Name="available_to" Type="datetime" />
-    <Property Name="venue_status" Type="nvarchar" MaxLength="20" />
-    <Property Name="venue_image" Type="nvarchar" MaxLength="500" />
+    <Property Name="location" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="capacity" Type="int" Nullable="false" />
+    <Property Name="price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="venue_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="catering" Type="bit" Nullable="false" />
+    <Property Name="parking" Type="bit" Nullable="false" />
+    <Property Name="ac" Type="bit" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="available_from" Type="datetime" Nullable="false" />
+    <Property Name="available_to" Type="datetime" Nullable="false" />
+    <Property Name="venue_status" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="venue_image" Type="nvarchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <Function Name="sp_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="una" Type="varchar" Mode="In" />
@@ -83,6 +83,7 @@
     <Parameter Name="uaddr" Type="varchar" Mode="In" />
     <Parameter Name="uphoto" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="sp_UserViewVenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_venueinsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ownerid" Type="int" Mode="In" />
     <Parameter Name="vname" Type="nvarchar" Mode="In" />

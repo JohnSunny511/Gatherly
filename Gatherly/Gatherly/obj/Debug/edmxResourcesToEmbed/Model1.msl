@@ -65,6 +65,26 @@
     <FunctionImportMapping FunctionImportName="sp_LoginInsert" FunctionName="GatherlyModel.Store.sp_LoginInsert" />
     <FunctionImportMapping FunctionImportName="sp_userreg" FunctionName="GatherlyModel.Store.sp_userreg" />
     <FunctionImportMapping FunctionImportName="sp_venueinsert" FunctionName="GatherlyModel.Store.sp_venueinsert" />
-    <FunctionImportMapping FunctionImportName="sp_login" FunctionName="GatherlyModel.Store.sp_login" />
+    <FunctionImportMapping FunctionImportName="sp_UserViewVenue" FunctionName="GatherlyModel.Store.sp_UserViewVenue">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GatherlyModel.sp_UserViewVenue_Result">
+          <ScalarProperty Name="venue_id" ColumnName="venue_id" />
+          <ScalarProperty Name="venue_image" ColumnName="venue_image" />
+          <ScalarProperty Name="venue_name" ColumnName="venue_name" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="capacity" ColumnName="capacity" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="venue_type" ColumnName="venue_type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_login" FunctionName="GatherlyModel.Store.sp_login">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GatherlyModel.sp_login_Result">
+          <ScalarProperty Name="reg_id" ColumnName="reg_id" />
+          <ScalarProperty Name="user_type" ColumnName="user_type" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

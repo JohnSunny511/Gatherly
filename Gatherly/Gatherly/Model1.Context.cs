@@ -194,7 +194,12 @@ namespace Gatherly
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_venueinsert", owneridParameter, vnameParameter, locationParameter, capacityParameter, priceParameter, venuetypeParameter, descriptionParameter, availablefromParameter, availabletoParameter, venueimageParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> sp_login(string una, string pwd)
+        public virtual ObjectResult<sp_UserViewVenue_Result> sp_UserViewVenue()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_UserViewVenue_Result>("sp_UserViewVenue");
+        }
+    
+        public virtual ObjectResult<sp_login_Result> sp_login(string una, string pwd)
         {
             var unaParameter = una != null ?
                 new ObjectParameter("una", una) :
@@ -204,7 +209,7 @@ namespace Gatherly
                 new ObjectParameter("pwd", pwd) :
                 new ObjectParameter("pwd", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_login", unaParameter, pwdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_login_Result>("sp_login", unaParameter, pwdParameter);
         }
     }
 }

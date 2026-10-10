@@ -1,3 +1,5 @@
+D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.csproj.AssemblyReference.cache
+D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.csproj.CoreCompileInputs.cache
 D:\Gatherly\Gatherly\Gatherly\bin\Gatherly.dll.config
 D:\Gatherly\Gatherly\Gatherly\bin\Gatherly.dll
 D:\Gatherly\Gatherly\Gatherly\bin\Gatherly.pdb
@@ -76,8 +78,6 @@ D:\Gatherly\Gatherly\Gatherly\bin\System.Web.WebPages.Razor.xml
 D:\Gatherly\Gatherly\Gatherly\bin\Newtonsoft.Json.xml
 D:\Gatherly\Gatherly\Gatherly\bin\Antlr3.Runtime.pdb
 D:\Gatherly\Gatherly\Gatherly\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.csproj.AssemblyReference.cache
-D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.csproj.CoreCompileInputs.cache
 D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.csproj.CopyComplete
 D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.dll
 D:\Gatherly\Gatherly\Gatherly\obj\Debug\Gatherly.pdb

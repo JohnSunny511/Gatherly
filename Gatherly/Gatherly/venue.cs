@@ -18,15 +18,15 @@ namespace Gatherly
         public int owner_id { get; set; }
         public string venue_name { get; set; }
         public string location { get; set; }
-        public Nullable<int> capacity { get; set; }
-        public Nullable<decimal> price { get; set; }
+        public int capacity { get; set; }
+        public decimal price { get; set; }
         public string venue_type { get; set; }
-        public Nullable<bool> catering { get; set; }
-        public Nullable<bool> parking { get; set; }
-        public Nullable<bool> ac { get; set; }
+        public bool catering { get; set; }
+        public bool parking { get; set; }
+        public bool ac { get; set; }
         public string description { get; set; }
-        public Nullable<System.DateTime> available_from { get; set; }
-        public Nullable<System.DateTime> available_to { get; set; }
+        public System.DateTime available_from { get; set; }
+        public System.DateTime available_to { get; set; }
         public string venue_status { get; set; }
         public string venue_image { get; set; }
     }

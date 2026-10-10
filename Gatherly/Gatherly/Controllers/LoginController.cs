@@ -16,27 +16,36 @@ namespace Gatherly.Controllers
             return View();
         }
 
-        
+
         public ActionResult Login_Click(Loginclss loginobj)
         {
             if (ModelState.IsValid)
             {
-                var getregid = dbobj.sp_login(
-                    loginobj.username,
-                    loginobj.password
+                var login = dbobj.sp_login(
+                loginobj.username,
+                loginobj.password
                 ).FirstOrDefault();
 
-                if (getregid != null)
+                if (login != null)
                 {
-                    int regid = Convert.ToInt32(getregid);
+                    if (login.user_type == "owner")
+                    {
+                        Session["owner_id"] = login.reg_id;
 
-                    Session["reg_id"] = regid;
-                    Session["owner_id"] = regid;
+                        return RedirectToAction(
+                            "InsertVenuePageLoad",
+                            "VenueInsert"
+                        );
+                    }
+                    else if (login.user_type == "user")
+                    {
+                        Session["user_id"] = login.reg_id;
 
-                    return RedirectToAction(
-                        "InsertVenuePageLoad",
-                        "VenueInsert"
-                    );
+                        return RedirectToAction(
+                            "UserViewVenue_PageLoad",
+                            "UserViewVenue"
+                        );
+                    }
                 }
 
                 loginobj.loginmsg = "Invalid username or password";
