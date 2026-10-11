@@ -55,6 +55,59 @@
     <Property Name="venue_status" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="venue_image" Type="nvarchar" MaxLength="500" Nullable="false" />
   </EntityType>
+  <EntityType Name="venue_booking">
+    <Key>
+      <PropertyRef Name="booking_id" />
+    </Key>
+    <Property Name="booking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="venue_id" Type="int" Nullable="false" />
+    <Property Name="event_date" Type="date" Nullable="false" />
+    <Property Name="guest_count" Type="int" Nullable="false" />
+    <Property Name="event_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="requirements" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="booking_date" Type="datetime" Nullable="false" />
+    <Property Name="booking_status" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_venue_booking_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="venue_booking" Type="Self.venue_booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="venue_booking">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_venue_booking_venue">
+    <End Role="venue" Type="Self.venue" Multiplicity="1" />
+    <End Role="venue_booking" Type="Self.venue_booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venue">
+        <PropertyRef Name="venue_id" />
+      </Principal>
+      <Dependent Role="venue_booking">
+        <PropertyRef Name="venue_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SP_CheckVenueBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="venue_id" Type="int" Mode="In" />
+    <Parameter Name="event_date" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SP_GetBookedDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="venue_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_InsertVenueBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user_id" Type="int" Mode="In" />
+    <Parameter Name="venue_id" Type="int" Mode="In" />
+    <Parameter Name="event_date" Type="date" Mode="In" />
+    <Parameter Name="guest_count" Type="int" Mode="In" />
+    <Parameter Name="event_type" Type="nvarchar" Mode="In" />
+    <Parameter Name="requirements" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <Function Name="sp_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="una" Type="varchar" Mode="In" />
     <Parameter Name="pwd" Type="varchar" Mode="In" />
@@ -101,5 +154,14 @@
     <EntitySet Name="owner" EntityType="Self.owner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="venue" EntityType="Self.venue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="venue_booking" EntityType="Self.venue_booking" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_venue_booking_user" Association="Self.FK_venue_booking_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="venue_booking" EntitySet="venue_booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_venue_booking_venue" Association="Self.FK_venue_booking_venue">
+      <End Role="venue" EntitySet="venue" />
+      <End Role="venue_booking" EntitySet="venue_booking" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

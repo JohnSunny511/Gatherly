@@ -86,5 +86,23 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="venue_booking">
+      <EntityTypeMapping TypeName="GatherlyModel.venue_booking">
+        <MappingFragment StoreEntitySet="venue_booking">
+          <ScalarProperty Name="booking_status" ColumnName="booking_status" />
+          <ScalarProperty Name="booking_date" ColumnName="booking_date" />
+          <ScalarProperty Name="requirements" ColumnName="requirements" />
+          <ScalarProperty Name="event_type" ColumnName="event_type" />
+          <ScalarProperty Name="guest_count" ColumnName="guest_count" />
+          <ScalarProperty Name="event_date" ColumnName="event_date" />
+          <ScalarProperty Name="venue_id" ColumnName="venue_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_CheckVenueBooking" FunctionName="GatherlyModel.Store.SP_CheckVenueBooking" />
+    <FunctionImportMapping FunctionImportName="SP_GetBookedDates" FunctionName="GatherlyModel.Store.SP_GetBookedDates" />
+    <FunctionImportMapping FunctionImportName="SP_InsertVenueBooking" FunctionName="GatherlyModel.Store.SP_InsertVenueBooking" />
   </EntityContainerMapping>
 </Mapping>

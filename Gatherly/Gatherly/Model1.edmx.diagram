@@ -9,6 +9,9 @@
         <EntityTypeShape EntityType="GatherlyModel.user" Width="1.5" PointX="5.125" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GatherlyModel.venue" Width="1.5" PointX="7.125" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GatherlyModel.owner" Width="1.5" PointX="3.125" PointY="1.125" />
+        <EntityTypeShape EntityType="GatherlyModel.venue_booking" Width="1.5" PointX="9.375" PointY="1.625" />
+        <AssociationConnector Association="GatherlyModel.FK_venue_booking_user" />
+        <AssociationConnector Association="GatherlyModel.FK_venue_booking_venue" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

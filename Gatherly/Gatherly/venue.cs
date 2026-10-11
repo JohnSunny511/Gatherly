@@ -14,6 +14,12 @@ namespace Gatherly
     
     public partial class venue
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public venue()
+        {
+            this.venue_booking = new HashSet<venue_booking>();
+        }
+    
         public int venue_id { get; set; }
         public int owner_id { get; set; }
         public string venue_name { get; set; }
@@ -29,5 +35,8 @@ namespace Gatherly
         public System.DateTime available_to { get; set; }
         public string venue_status { get; set; }
         public string venue_image { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<venue_booking> venue_booking { get; set; }
     }
 }

@@ -14,6 +14,12 @@ namespace Gatherly
     
     public partial class user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.venue_booking = new HashSet<venue_booking>();
+        }
+    
         public int user_id { get; set; }
         public string user_name { get; set; }
         public int user_age { get; set; }
@@ -22,5 +28,8 @@ namespace Gatherly
         public string user_addr { get; set; }
         public string user_photo { get; set; }
         public string user_status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<venue_booking> venue_booking { get; set; }
     }
 }

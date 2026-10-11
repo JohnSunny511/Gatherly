@@ -71,6 +71,7 @@
                     <th>Capacity</th>
                     <th>Price</th>
                     <th>Venue Type</th>
+                    <th>Action</th>
                 </tr>
             </thead>
 
@@ -94,6 +95,15 @@
                     <td>₹@item.price.ToString("N2")</td>
 
                     <td>@item.venue_type</td>
+                    <td>
+                        @Html.ActionLink(
+                            "Book Venue",
+                            "VenueBooking_PageLoad",
+                            "VenueBooking",
+                            new { id = item.venue_id },
+                            new { @class = "btn btn-primary" }
+                        )
+                    </td>
                 </tr>
                 }
             </tbody>

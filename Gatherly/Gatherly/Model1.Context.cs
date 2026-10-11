@@ -31,6 +31,7 @@ namespace Gatherly
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<venue> venues { get; set; }
         public virtual DbSet<owner> owners { get; set; }
+        public virtual DbSet<venue_booking> venue_booking { get; set; }
     
         public virtual int adminreg(Nullable<int> oid, string ona, string oemail, string ophone, string oaddr, string ophoto)
         {
@@ -210,6 +211,57 @@ namespace Gatherly
                 new ObjectParameter("pwd", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_login_Result>("sp_login", unaParameter, pwdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_CheckVenueBooking(Nullable<int> venue_id, Nullable<System.DateTime> event_date)
+        {
+            var venue_idParameter = venue_id.HasValue ?
+                new ObjectParameter("venue_id", venue_id) :
+                new ObjectParameter("venue_id", typeof(int));
+    
+            var event_dateParameter = event_date.HasValue ?
+                new ObjectParameter("event_date", event_date) :
+                new ObjectParameter("event_date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_CheckVenueBooking", venue_idParameter, event_dateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<System.DateTime>> SP_GetBookedDates(Nullable<int> venue_id)
+        {
+            var venue_idParameter = venue_id.HasValue ?
+                new ObjectParameter("venue_id", venue_id) :
+                new ObjectParameter("venue_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("SP_GetBookedDates", venue_idParameter);
+        }
+    
+        public virtual int SP_InsertVenueBooking(Nullable<int> user_id, Nullable<int> venue_id, Nullable<System.DateTime> event_date, Nullable<int> guest_count, string event_type, string requirements)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            var venue_idParameter = venue_id.HasValue ?
+                new ObjectParameter("venue_id", venue_id) :
+                new ObjectParameter("venue_id", typeof(int));
+    
+            var event_dateParameter = event_date.HasValue ?
+                new ObjectParameter("event_date", event_date) :
+                new ObjectParameter("event_date", typeof(System.DateTime));
+    
+            var guest_countParameter = guest_count.HasValue ?
+                new ObjectParameter("guest_count", guest_count) :
+                new ObjectParameter("guest_count", typeof(int));
+    
+            var event_typeParameter = event_type != null ?
+                new ObjectParameter("event_type", event_type) :
+                new ObjectParameter("event_type", typeof(string));
+    
+            var requirementsParameter = requirements != null ?
+                new ObjectParameter("requirements", requirements) :
+                new ObjectParameter("requirements", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertVenueBooking", user_idParameter, venue_idParameter, event_dateParameter, guest_countParameter, event_typeParameter, requirementsParameter);
         }
     }
 }

@@ -60,6 +60,59 @@
           <Property Name="venue_status" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="venue_image" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <EntityType Name="venue_booking">
+          <Key>
+            <PropertyRef Name="booking_id" />
+          </Key>
+          <Property Name="booking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="venue_id" Type="int" Nullable="false" />
+          <Property Name="event_date" Type="date" Nullable="false" />
+          <Property Name="guest_count" Type="int" Nullable="false" />
+          <Property Name="event_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="requirements" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="booking_date" Type="datetime" Nullable="false" />
+          <Property Name="booking_status" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_venue_booking_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="venue_booking" Type="Self.venue_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="venue_booking">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_venue_booking_venue">
+          <End Role="venue" Type="Self.venue" Multiplicity="1" />
+          <End Role="venue_booking" Type="Self.venue_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="venue">
+              <PropertyRef Name="venue_id" />
+            </Principal>
+            <Dependent Role="venue_booking">
+              <PropertyRef Name="venue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_CheckVenueBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="venue_id" Type="int" Mode="In" />
+          <Parameter Name="event_date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="SP_GetBookedDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="venue_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertVenueBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_id" Type="int" Mode="In" />
+          <Parameter Name="venue_id" Type="int" Mode="In" />
+          <Parameter Name="event_date" Type="date" Mode="In" />
+          <Parameter Name="guest_count" Type="int" Mode="In" />
+          <Parameter Name="event_type" Type="nvarchar" Mode="In" />
+          <Parameter Name="requirements" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="sp_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="una" Type="varchar" Mode="In" />
           <Parameter Name="pwd" Type="varchar" Mode="In" />
@@ -106,6 +159,15 @@
           <EntitySet Name="owner" EntityType="Self.owner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="venue" EntityType="Self.venue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="venue_booking" EntityType="Self.venue_booking" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_venue_booking_user" Association="Self.FK_venue_booking_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="venue_booking" EntitySet="venue_booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_venue_booking_venue" Association="Self.FK_venue_booking_venue">
+            <End Role="venue" EntitySet="venue" />
+            <End Role="venue_booking" EntitySet="venue_booking" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -133,6 +195,7 @@
           <Property Name="user_addr" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="user_photo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="user_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="venue_booking" Relationship="GatherlyModel.FK_venue_booking_user" FromRole="user" ToRole="venue_booking" />
         </EntityType>
         <EntityType Name="venue">
           <Key>
@@ -153,6 +216,7 @@
           <Property Name="available_to" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="venue_status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="venue_image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="venue_booking" Relationship="GatherlyModel.FK_venue_booking_venue" FromRole="venue" ToRole="venue_booking" />
         </EntityType>
         <EntityContainer Name="GatherlyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="logins" EntityType="Self.login" />
@@ -208,6 +272,30 @@
             <Parameter Name="una" Mode="In" Type="String" />
             <Parameter Name="pwd" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="venue_booking" EntityType="GatherlyModel.venue_booking" />
+          <AssociationSet Name="FK_venue_booking_user" Association="GatherlyModel.FK_venue_booking_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="venue_booking" EntitySet="venue_booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_venue_booking_venue" Association="GatherlyModel.FK_venue_booking_venue">
+            <End Role="venue" EntitySet="venues" />
+            <End Role="venue_booking" EntitySet="venue_booking" />
+          </AssociationSet>
+          <FunctionImport Name="SP_CheckVenueBooking" ReturnType="Collection(Int32)">
+            <Parameter Name="venue_id" Mode="In" Type="Int32" />
+            <Parameter Name="event_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetBookedDates" ReturnType="Collection(DateTime)">
+            <Parameter Name="venue_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertVenueBooking">
+            <Parameter Name="user_id" Mode="In" Type="Int32" />
+            <Parameter Name="venue_id" Mode="In" Type="Int32" />
+            <Parameter Name="event_date" Mode="In" Type="DateTime" />
+            <Parameter Name="guest_count" Mode="In" Type="Int32" />
+            <Parameter Name="event_type" Mode="In" Type="String" />
+            <Parameter Name="requirements" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="owner">
           <Key>
@@ -234,6 +322,46 @@
           <Property Type="Int32" Name="reg_id" Nullable="false" />
           <Property Type="String" Name="user_type" Nullable="false" MaxLength="20" />
         </ComplexType>
+        <EntityType Name="venue_booking">
+          <Key>
+            <PropertyRef Name="booking_id" />
+          </Key>
+          <Property Name="booking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="venue_id" Type="Int32" Nullable="false" />
+          <Property Name="event_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="guest_count" Type="Int32" Nullable="false" />
+          <Property Name="event_type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="requirements" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="booking_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="booking_status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="GatherlyModel.FK_venue_booking_user" FromRole="venue_booking" ToRole="user" />
+          <NavigationProperty Name="venue" Relationship="GatherlyModel.FK_venue_booking_venue" FromRole="venue_booking" ToRole="venue" />
+        </EntityType>
+        <Association Name="FK_venue_booking_user">
+          <End Type="GatherlyModel.user" Role="user" Multiplicity="1" />
+          <End Type="GatherlyModel.venue_booking" Role="venue_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="venue_booking">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_venue_booking_venue">
+          <End Type="GatherlyModel.venue" Role="venue" Multiplicity="1" />
+          <End Type="GatherlyModel.venue_booking" Role="venue_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="venue">
+              <PropertyRef Name="venue_id" />
+            </Principal>
+            <Dependent Role="venue_booking">
+              <PropertyRef Name="venue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -325,6 +453,24 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="venue_booking">
+            <EntityTypeMapping TypeName="GatherlyModel.venue_booking">
+              <MappingFragment StoreEntitySet="venue_booking">
+                <ScalarProperty Name="booking_status" ColumnName="booking_status" />
+                <ScalarProperty Name="booking_date" ColumnName="booking_date" />
+                <ScalarProperty Name="requirements" ColumnName="requirements" />
+                <ScalarProperty Name="event_type" ColumnName="event_type" />
+                <ScalarProperty Name="guest_count" ColumnName="guest_count" />
+                <ScalarProperty Name="event_date" ColumnName="event_date" />
+                <ScalarProperty Name="venue_id" ColumnName="venue_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_CheckVenueBooking" FunctionName="GatherlyModel.Store.SP_CheckVenueBooking" />
+          <FunctionImportMapping FunctionImportName="SP_GetBookedDates" FunctionName="GatherlyModel.Store.SP_GetBookedDates" />
+          <FunctionImportMapping FunctionImportName="SP_InsertVenueBooking" FunctionName="GatherlyModel.Store.SP_InsertVenueBooking" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,0 +1,173 @@
+﻿@model Gatherly.Models.VenueBookingclss
+@{
+    ViewBag.Title = "VenueBooking_PageLoad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<h2>Book Venue</h2>
+
+<h3>Venue Details</h3>
+
+<table class="table table-bordered" style="width:100%;">
+    <tr>
+        <td style="width:30%;"><strong>Venue Image</strong></td>
+        <td>
+            <img src="@Url.Content(Model.venue_image)"
+                 alt="@Model.venue_name"
+                 width="200"
+                 height="130"
+                 style="object-fit:cover;" />
+        </td>
+    </tr>
+
+    <tr>
+        <td><strong>Venue Name</strong></td>
+        <td>@Model.venue_name</td>
+    </tr>
+
+    <tr>
+        <td><strong>Location</strong></td>
+        <td>@Model.location</td>
+    </tr>
+
+    <tr>
+        <td><strong>Capacity</strong></td>
+        <td>@Model.capacity Guests</td>
+    </tr>
+
+    <tr>
+        <td><strong>Price</strong></td>
+        <td>₹@Model.price.ToString("N2")</td>
+    </tr>
+
+    <tr>
+        <td><strong>Venue Type</strong></td>
+        <td>@Model.venue_type</td>
+    </tr>
+</table>
+
+<hr />
+
+<h3>Booking Details</h3>
+```
+
+
+
+<br />
+
+@if (ViewBag.Message != null)
+{
+    <p style="color:red;">@ViewBag.Message</p>}
+
+@using (Html.BeginForm("VenueBooking_Click", "VenueBooking",
+                       FormMethod.Post, new { id = "bookingForm" }))
+{
+    @Html.HiddenFor(m => m.venue_id)
+
+    <table style="width:100%; border:1px solid lightgray;
+                  background-color:LightGray;">
+
+        <tr>
+            <td style="padding:10px; width:30%;">
+                Event Date
+            </td>
+            <td style="padding:10px;">
+                @Html.TextBoxFor(m => m.event_date,
+                    "{0:yyyy-MM-dd}",
+                    new
+                         {
+                        type = "date",
+                        id = "event_date",
+                        min = DateTime.Today.ToString("yyyy-MM-dd"),
+                        required = "required",
+                        style = "width:100%; padding:8px;"
+                    })
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding:10px;">
+                Number of Guests
+            </td>
+            <td style="padding:10px;">
+                @Html.TextBoxFor(m => m.guest_count,
+                    new
+                         {
+                        type = "number",
+                        min = "1",
+                        required = "required",
+                        style = "width:100%; padding:8px;"
+                    })
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding:10px;">
+                Event Type
+            </td>
+            <td style="padding:10px;">
+                @Html.DropDownListFor(m => m.event_type,
+                    new SelectList(new[]
+                    {
+                        "Wedding",
+                        "Reception",
+                        "Engagement",
+                        "Birthday",
+                        "Other"
+                    }, Model.event_type),
+                    new
+                         {
+                        required = "required",
+                        style = "width:100%; padding:8px;"
+                    })
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding:10px;">
+                Additional Requirements
+            </td>
+            <td style="padding:10px;">
+                @Html.TextAreaFor(m => m.requirements,
+                    new
+                         {
+                        placeholder = "Enter any additional requirements",
+                        rows = "4",
+                        style = "width:100%; padding:8px;"
+                    })
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding:10px;">
+                <input type="submit"
+                       value="Send Booking Request"
+                       class="btn btn-primary" />
+            </td>
+        </tr>
+    </table>}
+
+<script>
+    var bookedDates = @Html.Raw(
+        System.Web.Helpers.Json.Encode(ViewBag.BookedDates));
+
+    document.getElementById("bookingForm").onsubmit = function () {
+        var selectedDate =
+            document.getElementById("event_date").value;
+
+        if (bookedDates.indexOf(selectedDate) !== -1) {
+            alert("This venue is already booked on this date.Please select another date.");
+            return false;
+        }
+
+        return true;
+    };
+</script>
+

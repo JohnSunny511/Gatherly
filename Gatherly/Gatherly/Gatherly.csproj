@@ -133,6 +133,7 @@
     <Compile Include="Controllers\OwnerRegController.cs" />
     <Compile Include="Controllers\UserRegController.cs" />
     <Compile Include="Controllers\UserViewVenueController.cs" />
+    <Compile Include="Controllers\VenueBookingController.cs" />
     <Compile Include="Controllers\VenueInsertController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -159,6 +160,7 @@
     <Compile Include="Models\OwnerRegclss.cs" />
     <Compile Include="Models\UserRegclss.cs" />
     <Compile Include="Models\UserViewVenueclss.cs" />
+    <Compile Include="Models\VenueBookingclss.cs" />
     <Compile Include="Models\VenueInsertclss.cs" />
     <Compile Include="Models\VenueSearchclss.cs" />
     <Compile Include="owner.cs">
@@ -175,6 +177,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="venue.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="venue_booking.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -236,6 +241,7 @@
     <Content Include="Views\VenueInsert\InsertVenuePageLoad.cshtml" />
     <Content Include="Views\Login\LoginPageLoad.cshtml" />
     <Content Include="Views\UserViewVenue\UserViewVenue_PageLoad.cshtml" />
+    <Content Include="Views\VenueBooking\VenueBooking_PageLoad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
